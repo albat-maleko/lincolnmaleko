@@ -23,6 +23,13 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    match /portfolio/{portfolioId} {
+      // Visitors can only read portfolio items marked as active.
+      allow read: if resource.data.active == true || isAdmin();
+      // Only the registered administrator can change portfolio data.
+      allow create, update, delete: if isAdmin();
+    }
+
     match /siteContent/{contentId} {
       // This document contains public page text only.
       allow read: if true;
