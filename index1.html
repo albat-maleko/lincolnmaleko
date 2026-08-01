@@ -265,6 +265,7 @@
         .service-index { margin-bottom: auto; color: var(--orange); font-weight: 800; }
         .service h3 { margin-bottom: 10px; color: #fff; font-size: 1.25rem; }
         .service p { margin-bottom: 0; color: rgba(255, 255, 255, 0.78); }
+        .service-meta { margin-top: 16px; color: #fff; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; }
         .service-logo { background: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&w=900&q=85') center/cover; }
         .service-event { background: url('https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=85') center/cover; }
         .service-decals { background: url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=85') center/cover; }
@@ -290,6 +291,25 @@
         .step h3 { margin-bottom: 9px; font-size: 1.25rem; }
         .step p { margin-bottom: 0; color: rgba(255, 255, 255, 0.64); }
 
+        .showcase { background: #111214; color: #fff; }
+        .showcase .section-label { color: var(--orange); }
+        .showcase-slider { position: relative; overflow: hidden; }
+        .showcase-slide { display: none; grid-template-columns: 1.15fr 0.85fr; min-height: 430px; background: #242529; }
+        .showcase-slide.active { display: grid; }
+        .showcase-slide img { width: 100%; height: 100%; min-height: 430px; object-fit: cover; }
+        .showcase-copy { display: flex; flex-direction: column; justify-content: center; padding: 52px; }
+        .showcase-copy h3 { margin-bottom: 14px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 4vw, 3.4rem); letter-spacing: -0.05em; line-height: 1; }
+        .showcase-copy p { max-width: 390px; margin-bottom: 0; color: rgba(255,255,255,0.68); }
+        .slider-controls { display: flex; gap: 10px; margin-top: 24px; }
+        .slider-controls button { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.35); background: transparent; color: #fff; cursor: pointer; font-size: 1.25rem; }
+        .slider-controls button:hover { border-color: var(--orange); color: var(--orange); }
+
+        .testimonials { background: #e7e0d4; }
+        .testimonial-slide { display: none; padding: 42px; background: #f8f5ef; border-left: 4px solid var(--orange); }
+        .testimonial-slide.active { display: block; }
+        .testimonial-quote { max-width: 850px; margin-bottom: 24px; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.6rem, 3vw, 2.6rem); letter-spacing: -0.04em; line-height: 1.18; }
+        .testimonial-author { margin: 0; color: var(--muted); font-weight: 700; }
+
         .contact-grid {
             display: grid;
             grid-template-columns: 0.9fr 1.1fr;
@@ -299,12 +319,15 @@
 
         .contact-copy p { margin-top: 18px; color: var(--muted); }
         .contact-note { font-size: 0.88rem; }
+        .contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+        .contact-links a { padding: 9px 12px; border: 1px solid var(--line); color: var(--ink); font-size: 0.78rem; font-weight: 700; text-decoration: none; }
+        .contact-links a:hover { border-color: var(--orange); color: var(--orange); }
 
         form { display: grid; gap: 18px; }
 
         label { display: grid; gap: 7px; font-size: 0.77rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 13px 0;
             border: 0;
@@ -320,8 +343,11 @@
         form .button { width: fit-content; cursor: pointer; }
         #responseMessage { min-height: 24px; margin: 0; color: #28704b; font-weight: 700; }
 
-        footer { padding: 28px 0; border-top: 1px solid var(--line); }
-        .footer-inner { display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 0.82rem; }
+        footer { padding: 40px 0 28px; border-top: 1px solid var(--line); }
+        .footer-inner { display: grid; grid-template-columns: 1fr auto; gap: 20px; color: var(--muted); font-size: 0.82rem; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: end; gap: 16px; }
+        .footer-links a { color: inherit; text-decoration: none; }
+        .footer-links a:hover { color: var(--orange); }
 
         @media (max-width: 760px) {
             .wrap { width: min(100% - 32px, 1120px); }
@@ -332,14 +358,17 @@
             .hero { min-height: 650px; padding-bottom: 52px; }
             .button-outline { display: none; }
             section { padding: 72px 0; }
-            .section-heading, .contact-grid { grid-template-columns: 1fr; gap: 18px; }
+            .section-heading, .contact-grid, .showcase-slide { grid-template-columns: 1fr; gap: 18px; }
             .identity-grid, .service-grid, .process-grid { grid-template-columns: 1fr; }
             .identity-card { min-height: auto; }
             .service { min-height: 220px; }
             .step, .step + .step { padding: 28px 0; border-right: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
             .step:last-child { border-bottom: 0; }
             .step span { margin-bottom: 24px; }
-            .footer-inner { flex-direction: column; }
+            .showcase-slide img { min-height: 260px; }
+            .showcase-copy { padding: 34px 26px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .footer-links { justify-content: start; }
         }
     </style>
 </head>
@@ -407,18 +436,39 @@
                         <span class="service-index">01</span>
                         <h3>Club Identity</h3>
                         <p>Logos, colour systems, patches, and apparel artwork for rider communities.</p>
+                        <span class="service-meta">From TZS 80,000 · 3–5 days</span>
                     </article>
                     <article class="service service-event">
                         <span class="service-index">02</span>
                         <h3>Event Promotion</h3>
                         <p>Posters, social graphics, and flyers for rides, races, launches, and meet-ups.</p>
+                        <span class="service-meta">From TZS 40,000 · 1–3 days</span>
                     </article>
                     <article class="service service-decals">
                         <span class="service-index">03</span>
                         <h3>Decals & Stickers</h3>
                         <p>Custom artwork for bikes, helmets, packaging, and merchandise.</p>
+                        <span class="service-meta">From TZS 50,000 · 2–4 days</span>
                     </article>
                 </div>
+            </div>
+        </section>
+
+        <section class="showcase" id="portfolio">
+            <div class="wrap">
+                <div class="section-heading">
+                    <span class="section-label">Selected work</span>
+                    <div>
+                        <h2>Made to be seen on and off the road.</h2>
+                        <p class="intro">A few examples of the visual direction we create for rider culture, events, and merchandise.</p>
+                    </div>
+                </div>
+                <div class="showcase-slider" id="portfolioSlider">
+                    <article class="showcase-slide active"><img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=85" alt="Motorcycle design inspiration"><div class="showcase-copy"><p class="section-label">Club identity</p><h3>Built for the crew.</h3><p>A bold identity system that works across rider apparel, social media, stickers, and event banners.</p></div></article>
+                    <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=85" alt="Live motorcycle event"><div class="showcase-copy"><p class="section-label">Event campaign</p><h3>More riders. More energy.</h3><p>Event artwork designed for flyers, digital announcements, ticket posts, and memorable launch moments.</p></div></article>
+                    <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1200&q=85" alt="Motorcycle rider on the road"><div class="showcase-copy"><p class="section-label">Decal concept</p><h3>Identity in motion.</h3><p>Custom graphic concepts that give helmets, motorcycles, and merchandise a distinctive finish.</p></div></article>
+                </div>
+                <div class="slider-controls" aria-label="Portfolio controls"><button type="button" id="portfolioPrevious" aria-label="Previous portfolio item">←</button><button type="button" id="portfolioNext" aria-label="Next portfolio item">→</button></div>
             </div>
         </section>
 
@@ -448,6 +498,18 @@
             </div>
         </section>
 
+        <section class="testimonials" id="testimonials">
+            <div class="wrap">
+                <div class="section-heading"><span class="section-label">Client notes</span><h2>Trusted by people who value a strong first impression.</h2></div>
+                <div id="testimonialSlider">
+                    <article class="testimonial-slide active"><p class="testimonial-quote">“The design gave our riding group a look that finally feels like us. It is clean, memorable, and easy to use everywhere.”</p><p class="testimonial-author">— Musa K., Riding Club Coordinator</p></article>
+                    <article class="testimonial-slide"><p class="testimonial-quote">“Our event poster was shared far more than previous designs. People understood the event details immediately.”</p><p class="testimonial-author">— Amina J., Event Organizer</p></article>
+                    <article class="testimonial-slide"><p class="testimonial-quote">“The process was clear from the first message. We received designs that were ready for print and social media.”</p><p class="testimonial-author">— Kelvin M., Motorcycle Enthusiast</p></article>
+                </div>
+                <div class="slider-controls"><button type="button" id="testimonialPrevious" aria-label="Previous testimonial">←</button><button type="button" id="testimonialNext" aria-label="Next testimonial">→</button></div>
+            </div>
+        </section>
+
         <section id="contact">
             <div class="wrap contact-grid">
                 <div class="contact-copy">
@@ -455,6 +517,7 @@
                     <h2 id="contactHeading">Got an idea worth showing?</h2>
                     <p id="contactDescription">Tell us about your club, event, bike, or brand. We will help turn it into a design people remember.</p>
                     <p class="contact-note" id="contactNote">Typical requests: logos, event posters, social-media graphics, decals, and merchandise artwork.</p>
+                    <div class="contact-links"><a href="https://wa.me/255700000000" target="_blank" rel="noopener">WhatsApp</a><a href="tel:+255700000000">Call us</a><a href="https://instagram.com/youragency" target="_blank" rel="noopener">Instagram</a></div>
                 </div>
                 <form action="https://formspree.io/f/mzdnwbvo" method="POST">
                     <input type="hidden" name="_subject" value="New Maleko Design Project Request">
@@ -464,10 +527,20 @@
                     <label for="email">Email address
                         <input id="email" name="email" type="email" autocomplete="email" required>
                     </label>
+                    <label for="phone">Phone / WhatsApp number
+                        <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+255 700 000 000" required>
+                    </label>
+                    <label for="budget">Estimated budget
+                        <select id="budget" name="budget" required><option value="" selected disabled>Select a budget range</option><option>Under TZS 50,000</option><option>TZS 50,000 – 100,000</option><option>TZS 100,000 – 250,000</option><option>Over TZS 250,000</option></select>
+                    </label>
+                    <label for="deadline">Preferred deadline
+                        <input id="deadline" name="deadline" type="date" required>
+                    </label>
                     <label for="message">What would you like designed?
                         <textarea id="message" name="message" required></textarea>
                     </label>
                     <button class="button" type="submit">Send project request</button>
+                    <p class="contact-note" id="privacy">We use your details only to reply to your project request. We do not sell your information.</p>
                     <p id="responseMessage" aria-live="polite"></p>
                 </form>
             </div>
@@ -476,8 +549,8 @@
 
     <footer>
         <div class="wrap footer-inner">
-            <span>© 2026 Maleko Design Agency</span>
-            <span>Visual identity for motorcycle culture.</span>
+            <span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span>
+            <div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a><a href="#privacy">Privacy</a></div>
         </div>
     </footer>
 
@@ -503,12 +576,40 @@
             hero.style.backgroundImage = `linear-gradient(90deg, rgba(11, 12, 14, 0.92) 0%, rgba(11, 12, 14, 0.7) 45%, rgba(11, 12, 14, 0.23) 100%), url("${slide.imageUrl}")`;
         }
 
+        function setupCarousel(containerId, slideSelector, previousId, nextId) {
+            const container = document.getElementById(containerId);
+            let items = [...container.querySelectorAll(slideSelector)];
+            let current = 0;
+
+            function show(index) {
+                if (!items.length) return;
+                current = (index + items.length) % items.length;
+                items.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === current));
+            }
+
+            function refresh() {
+                items = [...container.querySelectorAll(slideSelector)];
+                current = 0;
+                show(0);
+            }
+
+            document.getElementById(previousId).addEventListener('click', () => show(current - 1));
+            document.getElementById(nextId).addEventListener('click', () => show(current + 1));
+            setInterval(() => show(current + 1), 7000);
+
+            return { refresh };
+        }
+
+        const portfolioCarousel = setupCarousel('portfolioSlider', '.showcase-slide', 'portfolioPrevious', 'portfolioNext');
+        setupCarousel('testimonialSlider', '.testimonial-slide', 'testimonialPrevious', 'testimonialNext');
+
         try {
             const app = initializeApp(firebaseConfig);
             const database = getFirestore(app);
             const slidesQuery = query(collection(database, 'slides'), where('active', '==', true));
             const servicesQuery = query(collection(database, 'services'), where('active', '==', true));
             const stepsQuery = query(collection(database, 'processSteps'), where('active', '==', true));
+            const portfolioQuery = query(collection(database, 'portfolio'), where('active', '==', true));
 
             function updateText(id, value) {
                 if (value) document.getElementById(id).textContent = value;
@@ -529,9 +630,38 @@
                     title.textContent = item.title;
                     const description = document.createElement('p');
                     description.textContent = item.description;
-                    card.append(number, title, description);
+                    const meta = document.createElement('span');
+                    meta.className = 'service-meta';
+                    meta.textContent = [item.price, item.timeline].filter(Boolean).join(' · ');
+                    card.append(number, title, description, meta);
                     grid.append(card);
                 });
+            }
+
+            function renderPortfolio(items) {
+                if (!items.length) return;
+                const container = document.getElementById('portfolioSlider');
+                container.replaceChildren();
+                items.forEach((item, index) => {
+                    const slide = document.createElement('article');
+                    slide.className = 'showcase-slide' + (index === 0 ? ' active' : '');
+                    const img = document.createElement('img');
+                    img.src = item.imageUrl;
+                    img.alt = item.title || 'Portfolio image';
+                    const copy = document.createElement('div');
+                    copy.className = 'showcase-copy';
+                    const label = document.createElement('p');
+                    label.className = 'section-label';
+                    label.textContent = item.label || '';
+                    const title = document.createElement('h3');
+                    title.textContent = item.title;
+                    const description = document.createElement('p');
+                    description.textContent = item.description;
+                    copy.append(label, title, description);
+                    slide.append(img, copy);
+                    container.append(slide);
+                });
+                portfolioCarousel.refresh();
             }
 
             function renderProcessSteps(items) {
@@ -587,6 +717,13 @@
                     .map((document) => ({ id: document.id, ...document.data() }))
                     .sort((first, second) => (first.order ?? 0) - (second.order ?? 0));
                 renderProcessSteps(steps);
+            });
+
+            onSnapshot(portfolioQuery, (snapshot) => {
+                const portfolioItems = snapshot.docs
+                    .map((document) => ({ id: document.id, ...document.data() }))
+                    .sort((first, second) => (first.order ?? 0) - (second.order ?? 0));
+                renderPortfolio(portfolioItems);
             });
 
             onSnapshot(slidesQuery, (snapshot) => {
