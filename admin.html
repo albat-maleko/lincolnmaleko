@@ -84,6 +84,22 @@
                 <h2 class="slides-heading">Existing slides</h2>
                 <div class="slide-list" id="slideList"></div>
 
+                <h2 class="slides-heading">Portfolio</h2>
+                <div class="panel">
+                    <h2>Add a portfolio item</h2>
+                    <form id="portfolioForm">
+                        <label>Category label<input id="portfolioLabel" type="text" placeholder="Club identity"></label>
+                        <label>Title<input id="portfolioTitle" type="text" required placeholder="Built for the crew."></label>
+                        <label>Description<textarea id="portfolioDescription" required placeholder="Write a short summary for visitors."></textarea></label>
+                        <label>Display order<input id="portfolioOrder" type="number" min="0" value="1" required></label>
+                        <label>Image URL<input id="portfolioImageUrl" type="url" required placeholder="https://example.com/image.jpg"></label>
+                        <label class="check"><input id="portfolioActive" type="checkbox" checked> Publish this item now</label>
+                        <button type="submit">Add portfolio item</button>
+                    </form>
+                    <p class="status" id="portfolioStatus" aria-live="polite"></p>
+                </div>
+                <div class="slide-list" id="portfolioList"></div>
+
                 <h2 class="slides-heading">Page text</h2>
                 <div class="panel">
                     <p class="lead">Change the public text below. Saving updates the user website immediately.</p>
@@ -116,6 +132,8 @@
                     <form id="serviceForm">
                         <label>Service title<input id="serviceTitle" type="text" required></label>
                         <label>Description<textarea id="serviceDescription" required></textarea></label>
+                        <label>Starting price<input id="servicePrice" type="text" placeholder="From TZS 80,000"></label>
+                        <label>Estimated completion time<input id="serviceTimeline" type="text" placeholder="3–5 days"></label>
                         <label>Display order<input id="serviceOrder" type="number" min="0" value="1" required></label>
                         <label>Image URL<input id="serviceImageUrl" type="url" required placeholder="https://example.com/image.jpg"></label>
                         <label class="check"><input id="serviceActive" type="checkbox" checked> Publish this service now</label>
@@ -159,6 +177,7 @@
         const contentStatus = document.getElementById('contentStatus');
         const serviceStatus = document.getElementById('serviceStatus');
         const stepStatus = document.getElementById('stepStatus');
+        const portfolioStatus = document.getElementById('portfolioStatus');
         const defaultContent = {
             aboutLabel: 'The brief',
             aboutHeading: 'One agency. One clear audience.',
@@ -343,6 +362,8 @@
                 await addDoc(collection(database, 'services'), {
                     title: document.getElementById('serviceTitle').value.trim(),
                     description: document.getElementById('serviceDescription').value.trim(),
+                    price: document.getElementById('servicePrice').value.trim(),
+                    timeline: document.getElementById('serviceTimeline').value.trim(),
                     order: Number(document.getElementById('serviceOrder').value),
                     active: document.getElementById('serviceActive').checked,
                     imageUrl: document.getElementById('serviceImageUrl').value.trim()
@@ -374,6 +395,34 @@
                 stepStatus.textContent = 'Could not save process step. Check Firestore rules.';
                 console.error(error);
             }
+        });
+
+        document.getElementById('portfolioForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            portfolioStatus.textContent = 'Saving portfolio item...';
+
+            try {
+                await addDoc(collection(database, 'portfolio'), {
+                    label: document.getElementById('portfolioLabel').value.trim(),
+                    title: document.getElementById('portfolioTitle').value.trim(),
+                    description: document.getElementById('portfolioDescription').value.trim(),
+                    order: Number(document.getElementById('portfolioOrder').value),
+                    active: document.getElementById('portfolioActive').checked,
+                    imageUrl: document.getElementById('portfolioImageUrl').value.trim()
+                });
+                event.target.reset();
+                document.getElementById('portfolioActive').checked = true;
+                document.getElementById('portfolioOrder').value = 1;
+                portfolioStatus.textContent = 'Portfolio item saved successfully.';
+            } catch (error) {
+                portfolioStatus.textContent = 'Could not save portfolio item. Check Firestore rules.';
+                console.error(error);
+            }
+        });
+
+        onSnapshot(collection(database, 'portfolio'), (snapshot) => {
+            const items = snapshot.docs.map((item) => ({ id: item.id, ...item.data() })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+            renderContentList(document.getElementById('portfolioList'), items, 'portfolio', true);
         });
 
         onSnapshot(collection(database, 'services'), (snapshot) => {
