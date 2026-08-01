@@ -1,11 +1,14 @@
+// FIRESTORE SECURITY RULES for Maleko Design Agency
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // ----- Checks whether the signed-in user is the one allowed admin -----
     function isAdmin() {
       return request.auth != null && request.auth.uid == 'hNwwH6TTtHSlUmanfAQPYSBtMqd2';
     }
 
+    // ----- Hero Slides (main homepage banner) -----
     match /slides/{slideId} {
       // Visitors can only read slides marked as active.
       allow read: if resource.data.active == true || isAdmin();
@@ -13,16 +16,19 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // ----- Services -----
     match /services/{serviceId} {
       allow read: if resource.data.active == true || isAdmin();
       allow create, update, delete: if isAdmin();
     }
 
+    // ----- Process Steps ("Working together") -----
     match /processSteps/{stepId} {
       allow read: if resource.data.active == true || isAdmin();
       allow create, update, delete: if isAdmin();
     }
 
+    // ----- Portfolio (event/showcase images) -----
     match /portfolio/{portfolioId} {
       // Visitors can only read portfolio items marked as active.
       allow read: if resource.data.active == true || isAdmin();
@@ -30,6 +36,7 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // ----- Page Text (About/Services/Contact wording) -----
     match /siteContent/{contentId} {
       // This document contains public page text only.
       allow read: if true;
@@ -37,3 +44,4 @@ service cloud.firestore {
     }
   }
 }
+// end of firestore security rules
