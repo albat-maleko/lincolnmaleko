@@ -49,6 +49,7 @@
         </header>
 
         <main>
+            <!-- LOGIN PANEL (shown only when signed out) -->
             <section id="loginPanel" class="panel login">
                 <h1>Admin access.</h1>
                 <p class="lead">Sign in with the administrator email created in Firebase Authentication.</p>
@@ -59,7 +60,9 @@
                 </form>
                 <p class="status" id="loginStatus" aria-live="polite"></p>
             </section>
+            <!-- /LOGIN PANEL -->
 
+            <!-- DASHBOARD (shown only when signed in as the admin) -->
             <section id="dashboard" class="hidden">
                 <div class="dashboard-head">
                     <div>
@@ -67,6 +70,7 @@
                         <p class="lead">Add an image and content here. Published slides appear automatically on the public website.</p>
                     </div>
                 </div>
+                <!-- ----- Sub-section: manage Hero Slides ----- -->
                 <div class="panel">
                     <h2>Add a slide</h2>
                     <form id="slideForm">
@@ -84,6 +88,7 @@
                 <h2 class="slides-heading">Existing slides</h2>
                 <div class="slide-list" id="slideList"></div>
 
+                <!-- ----- Sub-section: manage Portfolio items ----- -->
                 <h2 class="slides-heading">Portfolio</h2>
                 <div class="panel">
                     <h2>Add a portfolio item</h2>
@@ -100,6 +105,7 @@
                 </div>
                 <div class="slide-list" id="portfolioList"></div>
 
+                <!-- ----- Sub-section: edit static Page Text (About/Services/Contact wording) ----- -->
                 <h2 class="slides-heading">Page text</h2>
                 <div class="panel">
                     <p class="lead">Change the public text below. Saving updates the user website immediately.</p>
@@ -127,6 +133,7 @@
                     <p class="status" id="contentStatus" aria-live="polite"></p>
                 </div>
 
+                <!-- ----- Sub-section: manage Services ----- -->
                 <h2 class="slides-heading">Services</h2>
                 <div class="panel">
                     <form id="serviceForm">
@@ -143,6 +150,7 @@
                 </div>
                 <div class="slide-list" id="serviceList"></div>
 
+                <!-- ----- Sub-section: manage Process Steps ----- -->
                 <h2 class="slides-heading">Process steps</h2>
                 <div class="panel">
                     <form id="stepForm">
@@ -156,15 +164,19 @@
                 </div>
                 <div class="slide-list" id="stepList"></div>
             </section>
+            <!-- /DASHBOARD -->
         </main>
     </div>
 
+    <!-- JAVASCRIPT (login, and all Add/Edit/Delete logic for the dashboard) -->
     <script type="module">
+        // Import Firebase functions we need (app, authentication, Firestore database)
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
         import { addDoc, collection, deleteDoc, doc, getFirestore, onSnapshot, setDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
         import { adminUid, firebaseConfig } from './firebase-config.js';
 
+        // Connect to Firebase + grab references to the main page elements
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const database = getFirestore(app);
@@ -178,6 +190,8 @@
         const serviceStatus = document.getElementById('serviceStatus');
         const stepStatus = document.getElementById('stepStatus');
         const portfolioStatus = document.getElementById('portfolioStatus');
+
+        // Fallback text used to pre-fill the "Page text" form if Firestore has no saved text yet
         const defaultContent = {
             aboutLabel: 'The brief',
             aboutHeading: 'One agency. One clear audience.',
@@ -199,6 +213,7 @@
             contactNote: 'Typical requests: logos, event posters, social-media graphics, decals, and merchandise artwork.'
         };
 
+        // LOGIN: sign in with email + password
         document.getElementById('loginForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             loginStatus.textContent = 'Signing in...';
@@ -212,6 +227,7 @@
 
         signOutButton.addEventListener('click', () => signOut(auth));
 
+        // AUTH GUARD: only the one admin UID (from firebase-config.js) may see the dashboard
         onAuthStateChanged(auth, async (user) => {
             const allowed = user && user.uid === adminUid;
             if (user && !allowed) {
@@ -225,6 +241,7 @@
             if (allowed) loginStatus.textContent = '';
         });
 
+        // SLIDES: add a new hero slide
         document.getElementById('slideForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             slideStatus.textContent = 'Saving slide...';
@@ -248,6 +265,7 @@
             }
         });
 
+        // SLIDES: live list with Publish/Hide and Delete buttons
         onSnapshot(collection(database, 'slides'), (snapshot) => {
             const slides = snapshot.docs.map((item) => ({ id: item.id, ...item.data() })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
             slideList.replaceChildren();
@@ -287,6 +305,7 @@
             });
         });
 
+        // PAGE TEXT: fills the form with saved (or default) wording
         function fillContentForm(content) {
             Object.entries({ ...defaultContent, ...content }).forEach(([key, value]) => {
                 const field = document.getElementById(key);
@@ -298,6 +317,7 @@
             fillContentForm(snapshot.exists() ? snapshot.data() : defaultContent);
         });
 
+        // PAGE TEXT: save edited wording back to Firestore
         document.getElementById('contentForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             const content = {};
@@ -314,6 +334,7 @@
             }
         });
 
+        // SHARED HELPER: builds the Publish/Hide + Delete list rows (used by Services, Process Steps, and Portfolio)
         function renderContentList(listElement, records, collectionName, includesImage) {
             listElement.replaceChildren();
             if (!records.length) {
@@ -354,6 +375,7 @@
             });
         }
 
+        // SERVICES: add a new service
         document.getElementById('serviceForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             serviceStatus.textContent = 'Saving service...';
@@ -378,6 +400,7 @@
             }
         });
 
+        // PROCESS STEPS: add a new step
         document.getElementById('stepForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             try {
@@ -397,6 +420,7 @@
             }
         });
 
+        // PORTFOLIO: add a new portfolio item
         document.getElementById('portfolioForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             portfolioStatus.textContent = 'Saving portfolio item...';
@@ -420,6 +444,7 @@
             }
         });
 
+        // LIVE LISTS: Portfolio, Services, Process Steps (each renders via the shared helper above)
         onSnapshot(collection(database, 'portfolio'), (snapshot) => {
             const items = snapshot.docs.map((item) => ({ id: item.id, ...item.data() })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
             renderContentList(document.getElementById('portfolioList'), items, 'portfolio', true);
@@ -435,5 +460,6 @@
             renderContentList(document.getElementById('stepList'), steps, 'processSteps', false);
         });
     </script>
+    <!-- /JAVASCRIPT -->
 </body>
 </html>
