@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Page metadata: title, description, viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Maleko Design Agency creates bold visual identities for motorcycle riders, clubs, and events.">
+    <title>Services | Maleko Design Agency</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .service-table { width: 100%; border-collapse: collapse; margin-top: 44px; background: #f8f5ef; }
+        .service-table caption { margin-bottom: 14px; color: var(--muted); font-size: 0.82rem; text-align: left; }
+        .service-table th, .service-table td { padding: 14px 18px; border: 1px solid var(--line); text-align: left; }
+        .service-table th { background: var(--ink); color: #fff; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    </style>
+</head>
+<body>
+    <!-- SITE HEADER (logo + top navigation menu) -->
+    <header class="site-header">
+        <div class="wrap nav">
+            <a class="brand" href="index1.html"><span class="brand-mark">M</span> Maleko Design</a>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index1.html#about">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="process.html">Process</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- /SITE HEADER -->
+
+    <main>
+        <!-- SERVICES SECTION (updates from Firebase 'services' collection) -->
+        <section class="services" id="services" style="padding-top: 160px;">
+            <div class="wrap">
+                <div class="section-heading">
+                    <span class="section-label" id="servicesLabel">What we make</span>
+                    <div>
+                        <h2 id="servicesHeading">Design that travels further.</h2>
+                        <p class="intro" id="servicesIntro">From the first logo sketch to the sticker on a helmet, every piece is designed to be seen and remembered.</p>
+                    </div>
+                </div>
+                <div class="service-grid" id="serviceGrid">
+                    <article class="service service-logo">
+                        <span class="service-index">01</span>
+                        <h3>Club Identity</h3>
+                        <p>Logos, colour systems, patches, and apparel artwork for rider communities.</p>
+                        <span class="service-meta">From TZS 80,000 · 3–5 days</span>
+                    </article>
+                    <article class="service service-event">
+                        <span class="service-index">02</span>
+                        <h3>Event Promotion</h3>
+                        <p>Posters, social graphics, and flyers for rides, races, launches, and meet-ups.</p>
+                        <span class="service-meta">From TZS 40,000 · 1–3 days</span>
+                    </article>
+                    <article class="service service-decals">
+                        <span class="service-index">03</span>
+                        <h3>Decals & Stickers</h3>
+                        <p>Custom artwork for bikes, helmets, packaging, and merchandise.</p>
+                        <span class="service-meta">From TZS 50,000 · 2–4 days</span>
+                    </article>
+                </div>
+
+                <!-- Same service data as the cards above, shown as a quick-reference table -->
+                <table class="service-table">
+                    <caption>Quick reference: starting price and typical turnaround for each service.</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Service</th>
+                            <th scope="col">Starting price</th>
+                            <th scope="col">Typical timeline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Club Identity</td>
+                            <td>From TZS 80,000</td>
+                            <td>3–5 days</td>
+                        </tr>
+                        <tr>
+                            <td>Event Promotion</td>
+                            <td>From TZS 40,000</td>
+                            <td>1–3 days</td>
+                        </tr>
+                        <tr>
+                            <td>Decals &amp; Stickers</td>
+                            <td>From TZS 50,000</td>
+                            <td>2–4 days</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!-- /SERVICES SECTION -->
+    </main>
+
+    <!-- SITE FOOTER (copyright + quick links) -->
+    <footer>
+        <div class="wrap footer-inner">
+            <span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span>
+            <div class="footer-links"><a href="index1.html#about">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#privacy">Privacy</a></div>
+        </div>
+    </footer>
+    <!-- /SITE FOOTER -->
+
+    <!-- JAVASCRIPT (live Firebase connection for the Services collection and Services text) -->
+    <script type="module">
+        // Import Firebase functions we need (app + Firestore database)
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+        import { getFirestore, collection, doc, onSnapshot, query, where } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+        import { firebaseConfig } from './firebase-config.js';
+
+        // Updates a single text element, but only if that element actually exists on this page
+        function updateText(id, value) {
+            const el = document.getElementById(id);
+            if (el && value) el.textContent = value;
+        }
+
+        // Everything below connects to Firestore and keeps the page updated in real time
+        // whenever content is changed from admin.html. If Firebase is unreachable, the
+        // page still works using the default text/images already written in the HTML above.
+        try {
+            // Connect to this project's Firebase app and Firestore database
+            const app = initializeApp(firebaseConfig);
+            const database = getFirestore(app);
+
+            // Only fetch services marked active:true
+            const servicesQuery = query(collection(database, 'services'), where('active', '==', true));
+
+            // Rebuilds the Services grid from Firestore data
+            function renderServices(items) {
+                if (!items.length) return;
+                const grid = document.getElementById('serviceGrid');
+                grid.replaceChildren();
+                items.forEach((item, index) => {
+                    const card = document.createElement('article');
+                    card.className = 'service';
+                    if (item.imageUrl) card.style.backgroundImage = `url("${item.imageUrl}")`;
+                    const number = document.createElement('span');
+                    number.className = 'service-index';
+                    number.textContent = String(index + 1).padStart(2, '0');
+                    const title = document.createElement('h3');
+                    title.textContent = item.title;
+                    const description = document.createElement('p');
+                    description.textContent = item.description;
+                    const meta = document.createElement('span');
+                    meta.className = 'service-meta';
+                    meta.textContent = [item.price, item.timeline].filter(Boolean).join(' · ');
+                    card.append(number, title, description, meta);
+                    grid.append(card);
+                });
+            }
+
+            // Live-updates the Services section wording when it changes in Firestore
+            onSnapshot(doc(database, 'siteContent', 'main'), (snapshot) => {
+                if (!snapshot.exists()) return;
+                const content = snapshot.data();
+                updateText('servicesLabel', content.servicesLabel);
+                updateText('servicesHeading', content.servicesHeading);
+                updateText('servicesIntro', content.servicesIntro);
+            });
+
+            // Live-updates the Services grid when the collection changes
+            onSnapshot(servicesQuery, (snapshot) => {
+                const services = snapshot.docs
+                    .map((document) => ({ id: document.id, ...document.data() }))
+                    .sort((first, second) => (first.order ?? 0) - (second.order ?? 0));
+                renderServices(services);
+            });
+        } catch (error) {
+            // If Firebase fails to connect, the site still shows the default HTML content
+            console.warn('The live services are not connected yet.', error);
+        }
+        // end of Firebase connection block
+    </script>
+    <!-- /JAVASCRIPT -->
+</body>
+</html>

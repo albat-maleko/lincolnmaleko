@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Page metadata: title, description, viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Maleko Design Agency creates bold visual identities for motorcycle riders, clubs, and events.">
+    <title>Process | Maleko Design Agency</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SITE HEADER (logo + top navigation menu) -->
+    <header class="site-header">
+        <div class="wrap nav">
+            <a class="brand" href="index1.html"><span class="brand-mark">M</span> Maleko Design</a>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index1.html#about">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="process.html">Process</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- /SITE HEADER -->
+
+    <main>
+        <!-- PROCESS SECTION ("Working together" steps, updates from Firebase 'processSteps') -->
+        <section class="process" id="process" style="padding-top: 160px;">
+            <div class="wrap">
+                <div class="section-heading">
+                    <span class="section-label" id="processLabel">Working together</span>
+                    <h2 id="processHeading">Simple from first message to final file.</h2>
+                </div>
+                <div class="process-grid" id="processGrid">
+                    <article class="step">
+                        <span>01</span>
+                        <h3>Tell us the story</h3>
+                        <p>Share your idea, audience, and the design you need.</p>
+                    </article>
+                    <article class="step">
+                        <span>02</span>
+                        <h3>We shape the concept</h3>
+                        <p>We turn the brief into a focused visual direction for your approval.</p>
+                    </article>
+                    <article class="step">
+                        <span>03</span>
+                        <h3>Ride with the result</h3>
+                        <p>After feedback, you receive polished files ready for print or digital use.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- /PROCESS SECTION -->
+
+        <!-- TESTIMONIALS SECTION (client quotes, currently fixed text, not from Firebase yet) -->
+        <section class="testimonials" id="testimonials">
+            <div class="wrap">
+                <div class="section-heading"><span class="section-label">Client notes</span><h2>Trusted by people who value a strong first impression.</h2></div>
+                <div id="testimonialSlider">
+                    <article class="testimonial-slide active"><p class="testimonial-quote">“The design gave our riding group a look that finally feels like us. It is clean, memorable, and easy to use everywhere.”</p><p class="testimonial-author">— Musa K., Riding Club Coordinator</p></article>
+                    <article class="testimonial-slide"><p class="testimonial-quote">“Our event poster was shared far more than previous designs. People understood the event details immediately.”</p><p class="testimonial-author">— Amina J., Event Organizer</p></article>
+                    <article class="testimonial-slide"><p class="testimonial-quote">“The process was clear from the first message. We received designs that were ready for print and social media.”</p><p class="testimonial-author">— Kelvin M., Motorcycle Enthusiast</p></article>
+                </div>
+                <div class="slider-controls"><button type="button" id="testimonialPrevious" aria-label="Previous testimonial">←</button><button type="button" id="testimonialNext" aria-label="Next testimonial">→</button></div>
+            </div>
+        </section>
+        <!-- /TESTIMONIALS SECTION -->
+    </main>
+
+    <!-- SITE FOOTER (copyright + quick links) -->
+    <footer>
+        <div class="wrap footer-inner">
+            <span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span>
+            <div class="footer-links"><a href="index1.html#about">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#privacy">Privacy</a></div>
+        </div>
+    </footer>
+    <!-- /SITE FOOTER -->
+
+    <!-- JAVASCRIPT (testimonial carousel + live Firebase connection for Process Steps) -->
+    <script type="module">
+        // Import Firebase functions we need (app + Firestore database)
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+        import { getFirestore, collection, doc, onSnapshot, query, where } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+        import { firebaseConfig } from './firebase-config.js';
+
+        // Shared carousel logic (only Testimonials uses it on this page)
+        function setupCarousel(containerId, slideSelector, previousId, nextId) {
+            const container = document.getElementById(containerId);
+            let items = [...container.querySelectorAll(slideSelector)];
+            let current = 0;
+
+            function show(index) {
+                if (!items.length) return;
+                current = (index + items.length) % items.length;
+                items.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === current));
+            }
+
+            document.getElementById(previousId).addEventListener('click', () => show(current - 1));
+            document.getElementById(nextId).addEventListener('click', () => show(current + 1));
+            setInterval(() => show(current + 1), 7000);
+        }
+
+        setupCarousel('testimonialSlider', '.testimonial-slide', 'testimonialPrevious', 'testimonialNext');
+
+        // Updates a single text element, but only if that element actually exists on this page
+        function updateText(id, value) {
+            const el = document.getElementById(id);
+            if (el && value) el.textContent = value;
+        }
+
+        // Everything below connects to Firestore and keeps the page updated in real time
+        // whenever content is changed from admin.html. If Firebase is unreachable, the
+        // page still works using the default text already written in the HTML above.
+        try {
+            // Connect to this project's Firebase app and Firestore database
+            const app = initializeApp(firebaseConfig);
+            const database = getFirestore(app);
+
+            // Only fetch process steps marked active:true
+            const stepsQuery = query(collection(database, 'processSteps'), where('active', '==', true));
+
+            // Rebuilds the Process ("Working together") steps from Firestore data
+            function renderProcessSteps(items) {
+                if (!items.length) return;
+                const grid = document.getElementById('processGrid');
+                grid.replaceChildren();
+                items.forEach((item, index) => {
+                    const step = document.createElement('article');
+                    step.className = 'step';
+                    const number = document.createElement('span');
+                    number.textContent = String(index + 1).padStart(2, '0');
+                    const title = document.createElement('h3');
+                    title.textContent = item.title;
+                    const description = document.createElement('p');
+                    description.textContent = item.description;
+                    step.append(number, title, description);
+                    grid.append(step);
+                });
+            }
+
+            // Live-updates the Process section wording when it changes in Firestore
+            onSnapshot(doc(database, 'siteContent', 'main'), (snapshot) => {
+                if (!snapshot.exists()) return;
+                const content = snapshot.data();
+                updateText('processLabel', content.processLabel);
+                updateText('processHeading', content.processHeading);
+            });
+
+            // Live-updates the Process steps when the collection changes
+            onSnapshot(stepsQuery, (snapshot) => {
+                const steps = snapshot.docs
+                    .map((document) => ({ id: document.id, ...document.data() }))
+                    .sort((first, second) => (first.order ?? 0) - (second.order ?? 0));
+                renderProcessSteps(steps);
+            });
+        } catch (error) {
+            // If Firebase fails to connect, the site still shows the default HTML content
+            console.warn('The live process steps are not connected yet.', error);
+        }
+        // end of Firebase connection block
+    </script>
+    <!-- /JAVASCRIPT -->
+</body>
+</html>

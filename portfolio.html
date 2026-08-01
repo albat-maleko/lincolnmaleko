@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Page metadata: title, description, viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Maleko Design Agency creates bold visual identities for motorcycle riders, clubs, and events.">
+    <title>Portfolio | Maleko Design Agency</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- SITE HEADER (logo + top navigation menu) -->
+    <header class="site-header">
+        <div class="wrap nav">
+            <a class="brand" href="index1.html"><span class="brand-mark">M</span> Maleko Design</a>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="index1.html#about">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="process.html">Process</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- /SITE HEADER -->
+
+    <main>
+        <!-- PORTFOLIO SECTION (image slider, updates from Firebase 'portfolio' collection) -->
+        <section class="showcase" id="portfolio" style="padding-top: 160px;">
+            <div class="wrap">
+                <div class="section-heading">
+                    <span class="section-label">Selected work</span>
+                    <div>
+                        <h2>Made to be seen on and off the road.</h2>
+                        <p class="intro">A few examples of the visual direction we create for rider culture, events, and merchandise.</p>
+                    </div>
+                </div>
+                <div class="showcase-slider" id="portfolioSlider">
+                    <article class="showcase-slide active"><img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=85" alt="Motorcycle design inspiration"><div class="showcase-copy"><p class="section-label">Club identity</p><h3>Built for the crew.</h3><p>A bold identity system that works across rider apparel, social media, stickers, and event banners.</p></div></article>
+                    <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=85" alt="Live motorcycle event"><div class="showcase-copy"><p class="section-label">Event campaign</p><h3>More riders. More energy.</h3><p>Event artwork designed for flyers, digital announcements, ticket posts, and memorable launch moments.</p></div></article>
+                    <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1200&q=85" alt="Motorcycle rider on the road"><div class="showcase-copy"><p class="section-label">Decal concept</p><h3>Identity in motion.</h3><p>Custom graphic concepts that give helmets, motorcycles, and merchandise a distinctive finish.</p></div></article>
+                </div>
+                <div class="slider-controls" aria-label="Portfolio controls"><button type="button" id="portfolioPrevious" aria-label="Previous portfolio item">←</button><button type="button" id="portfolioNext" aria-label="Next portfolio item">→</button></div>
+            </div>
+        </section>
+        <!-- /PORTFOLIO SECTION -->
+    </main>
+
+    <!-- SITE FOOTER (copyright + quick links) -->
+    <footer>
+        <div class="wrap footer-inner">
+            <span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span>
+            <div class="footer-links"><a href="index1.html#about">About</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a><a href="contact.html#privacy">Privacy</a></div>
+        </div>
+    </footer>
+    <!-- /SITE FOOTER -->
+
+    <!-- JAVASCRIPT (portfolio carousel + live Firebase connection for the Portfolio collection) -->
+    <script type="module">
+        // Import Firebase functions we need (app + Firestore database)
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+        import { getFirestore, collection, onSnapshot, query, where } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+        import { firebaseConfig } from './firebase-config.js';
+
+        // Shared carousel logic. refresh() lets it rebuild its slide list after new items are added.
+        function setupCarousel(containerId, slideSelector, previousId, nextId) {
+            const container = document.getElementById(containerId);
+            let items = [...container.querySelectorAll(slideSelector)];
+            let current = 0;
+
+            function show(index) {
+                if (!items.length) return;
+                current = (index + items.length) % items.length;
+                items.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === current));
+            }
+
+            function refresh() {
+                items = [...container.querySelectorAll(slideSelector)];
+                current = 0;
+                show(0);
+            }
+
+            document.getElementById(previousId).addEventListener('click', () => show(current - 1));
+            document.getElementById(nextId).addEventListener('click', () => show(current + 1));
+            setInterval(() => show(current + 1), 7000);
+
+            return { refresh };
+        }
+
+        // Activate the Portfolio carousel (kept refreshable so new Firestore items can rebuild it)
+        const portfolioCarousel = setupCarousel('portfolioSlider', '.showcase-slide', 'portfolioPrevious', 'portfolioNext');
+
+        // Everything below connects to Firestore and keeps the page updated in real time
+        // whenever content is changed from admin.html. If Firebase is unreachable, the
+        // page still works using the default images already written in the HTML above.
+        try {
+            // Connect to this project's Firebase app and Firestore database
+            const app = initializeApp(firebaseConfig);
+            const database = getFirestore(app);
+
+            // Only fetch portfolio items marked active:true
+            const portfolioQuery = query(collection(database, 'portfolio'), where('active', '==', true));
+
+            // Rebuilds the Portfolio slider from Firestore data, then refreshes the carousel
+            function renderPortfolio(items) {
+                if (!items.length) return;
+                const container = document.getElementById('portfolioSlider');
+                container.replaceChildren();
+                items.forEach((item, index) => {
+                    const slide = document.createElement('article');
+                    slide.className = 'showcase-slide' + (index === 0 ? ' active' : '');
+                    const img = document.createElement('img');
+                    img.src = item.imageUrl;
+                    img.alt = item.title || 'Portfolio image';
+                    const copy = document.createElement('div');
+                    copy.className = 'showcase-copy';
+                    const label = document.createElement('p');
+                    label.className = 'section-label';
+                    label.textContent = item.label || '';
+                    const title = document.createElement('h3');
+                    title.textContent = item.title;
+                    const description = document.createElement('p');
+                    description.textContent = item.description;
+                    copy.append(label, title, description);
+                    slide.append(img, copy);
+                    container.append(slide);
+                });
+                portfolioCarousel.refresh();
+            }
+
+            // Live-updates the Portfolio slider when the collection changes
+            onSnapshot(portfolioQuery, (snapshot) => {
+                const portfolioItems = snapshot.docs
+                    .map((document) => ({ id: document.id, ...document.data() }))
+                    .sort((first, second) => (first.order ?? 0) - (second.order ?? 0));
+                renderPortfolio(portfolioItems);
+            });
+        } catch (error) {
+            // If Firebase fails to connect, the site still shows the default HTML content
+            console.warn('The live portfolio is not connected yet.', error);
+        }
+        // end of Firebase connection block
+    </script>
+    <!-- /JAVASCRIPT -->
+</body>
+</html>
