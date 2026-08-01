@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Page metadata: title, description, viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Maleko Design Agency creates bold visual identities for motorcycle riders, clubs, and events.">
     <title>Maleko Design Agency | Built for Riders</title>
+    <!-- CSS STYLES (colors, layout, all page styling) -->
     <style>
         :root {
             --ink: #101114;
@@ -371,8 +373,10 @@
             .footer-links { justify-content: start; }
         }
     </style>
+    <!-- /CSS STYLES -->
 </head>
 <body>
+    <!-- SITE HEADER (logo + top navigation menu) -->
     <header class="site-header">
         <div class="wrap nav">
             <a class="brand" href="#top"><span class="brand-mark">M</span> Maleko Design</a>
@@ -386,8 +390,10 @@
             </nav>
         </div>
     </header>
+    <!-- /SITE HEADER -->
 
     <main id="top">
+        <!-- HERO SECTION (big banner image + main heading, updates from Firebase 'slides') -->
         <section class="hero" id="hero">
             <div class="wrap hero-content">
                 <p class="eyebrow" id="heroEyebrow">Visual identity for the road</p>
@@ -397,7 +403,9 @@
                 <a class="button button-outline" href="#services">Explore services</a>
             </div>
         </section>
+        <!-- /HERO SECTION -->
 
+        <!-- ABOUT SECTION ("The brief" - who we are, who our clients are) -->
         <section id="about">
             <div class="wrap">
                 <div class="section-heading">
@@ -422,6 +430,9 @@
             </div>
         </section>
 
+        <!-- /ABOUT SECTION -->
+
+        <!-- SERVICES SECTION (updates from Firebase 'services' collection) -->
         <section class="services" id="services">
             <div class="wrap">
                 <div class="section-heading">
@@ -454,6 +465,9 @@
             </div>
         </section>
 
+        <!-- /SERVICES SECTION -->
+
+        <!-- PORTFOLIO SECTION (image slider, updates from Firebase 'portfolio' collection) -->
         <section class="showcase" id="portfolio">
             <div class="wrap">
                 <div class="section-heading">
@@ -472,6 +486,9 @@
             </div>
         </section>
 
+        <!-- /PORTFOLIO SECTION -->
+
+        <!-- PROCESS SECTION ("Working together" steps, updates from Firebase 'processSteps') -->
         <section class="process" id="process">
             <div class="wrap">
                 <div class="section-heading">
@@ -498,6 +515,9 @@
             </div>
         </section>
 
+        <!-- /PROCESS SECTION -->
+
+        <!-- TESTIMONIALS SECTION (client quotes, currently fixed text, not from Firebase yet) -->
         <section class="testimonials" id="testimonials">
             <div class="wrap">
                 <div class="section-heading"><span class="section-label">Client notes</span><h2>Trusted by people who value a strong first impression.</h2></div>
@@ -510,6 +530,9 @@
             </div>
         </section>
 
+        <!-- /TESTIMONIALS SECTION -->
+
+        <!-- CONTACT SECTION (contact links + project request form, sends via Formspree) -->
         <section id="contact">
             <div class="wrap contact-grid">
                 <div class="contact-copy">
@@ -545,20 +568,26 @@
                 </form>
             </div>
         </section>
+        <!-- /CONTACT SECTION -->
     </main>
 
+    <!-- SITE FOOTER (copyright + quick links) -->
     <footer>
         <div class="wrap footer-inner">
             <span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span>
             <div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a><a href="#privacy">Privacy</a></div>
         </div>
     </footer>
+    <!-- /SITE FOOTER -->
 
+    <!-- JAVASCRIPT (carousels + live Firebase connection for slides/services/portfolio/steps/text) -->
     <script type="module">
+        // Import Firebase functions we need (app + Firestore database)
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
         import { getFirestore, collection, doc, onSnapshot, query, where } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
         import { firebaseConfig } from './firebase-config.js';
 
+        // Hero elements + the current slide list
         const hero = document.getElementById('hero');
         const heroEyebrow = document.getElementById('heroEyebrow');
         const heroTitle = document.getElementById('heroTitle');
@@ -566,6 +595,7 @@
         let slides = [];
         let activeSlide = 0;
 
+        // Displays one hero slide (by index) using its label/title/description/image
         function showSlide(index) {
             const slide = slides[index];
             if (!slide) return;
@@ -576,6 +606,8 @@
             hero.style.backgroundImage = `linear-gradient(90deg, rgba(11, 12, 14, 0.92) 0%, rgba(11, 12, 14, 0.7) 45%, rgba(11, 12, 14, 0.23) 100%), url("${slide.imageUrl}")`;
         }
 
+        // Shared carousel logic used by both the Portfolio and Testimonials sliders.
+        // refresh() lets a carousel rebuild its slide list after new items are added.
         function setupCarousel(containerId, slideSelector, previousId, nextId) {
             const container = document.getElementById(containerId);
             let items = [...container.querySelectorAll(slideSelector)];
@@ -600,21 +632,30 @@
             return { refresh };
         }
 
+        // Activate the Portfolio carousel (kept refreshable) and the Testimonials carousel
         const portfolioCarousel = setupCarousel('portfolioSlider', '.showcase-slide', 'portfolioPrevious', 'portfolioNext');
         setupCarousel('testimonialSlider', '.testimonial-slide', 'testimonialPrevious', 'testimonialNext');
 
+                // Everything below connects to Firestore and keeps the page updated in real time
+        // whenever content is changed from admin.html. If Firebase is unreachable, the
+        // page still works using the default text/images already written in the HTML above.
         try {
+            // Connect to this project's Firebase app and Firestore database
             const app = initializeApp(firebaseConfig);
             const database = getFirestore(app);
+
+            // Queries: only fetch documents marked active:true from each collection
             const slidesQuery = query(collection(database, 'slides'), where('active', '==', true));
             const servicesQuery = query(collection(database, 'services'), where('active', '==', true));
             const stepsQuery = query(collection(database, 'processSteps'), where('active', '==', true));
             const portfolioQuery = query(collection(database, 'portfolio'), where('active', '==', true));
 
+            // Updates a single text element (used for About/Services/Contact page text)
             function updateText(id, value) {
                 if (value) document.getElementById(id).textContent = value;
             }
 
+            // Rebuilds the Services grid from Firestore data
             function renderServices(items) {
                 if (!items.length) return;
                 const grid = document.getElementById('serviceGrid');
@@ -638,6 +679,7 @@
                 });
             }
 
+            // Rebuilds the Portfolio slider from Firestore data, then refreshes the carousel
             function renderPortfolio(items) {
                 if (!items.length) return;
                 const container = document.getElementById('portfolioSlider');
@@ -664,6 +706,7 @@
                 portfolioCarousel.refresh();
             }
 
+            // Rebuilds the Process ("Working together") steps from Firestore data
             function renderProcessSteps(items) {
                 if (!items.length) return;
                 const grid = document.getElementById('processGrid');
@@ -682,6 +725,7 @@
                 });
             }
 
+            // Live-updates About/Services/Contact wording when it changes in Firestore
             onSnapshot(doc(database, 'siteContent', 'main'), (snapshot) => {
                 if (!snapshot.exists()) return;
                 const content = snapshot.data();
@@ -705,6 +749,7 @@
                 updateText('contactNote', content.contactNote);
             });
 
+            // Live-updates the Services grid when the collection changes
             onSnapshot(servicesQuery, (snapshot) => {
                 const services = snapshot.docs
                     .map((document) => ({ id: document.id, ...document.data() }))
@@ -712,6 +757,7 @@
                 renderServices(services);
             });
 
+            // Live-updates the Process steps when the collection changes
             onSnapshot(stepsQuery, (snapshot) => {
                 const steps = snapshot.docs
                     .map((document) => ({ id: document.id, ...document.data() }))
@@ -719,6 +765,7 @@
                 renderProcessSteps(steps);
             });
 
+            // Live-updates the Portfolio slider when the collection changes
             onSnapshot(portfolioQuery, (snapshot) => {
                 const portfolioItems = snapshot.docs
                     .map((document) => ({ id: document.id, ...document.data() }))
@@ -726,6 +773,7 @@
                 renderPortfolio(portfolioItems);
             });
 
+            // Live-updates the hero slides when the collection changes
             onSnapshot(slidesQuery, (snapshot) => {
                 slides = snapshot.docs
                     .map((document) => ({ id: document.id, ...document.data() }))
@@ -737,14 +785,18 @@
                 }
             });
 
+            // Auto-advance the hero slide every 6 seconds (only if 2+ slides exist)
             setInterval(() => {
                 if (slides.length < 2) return;
                 activeSlide = (activeSlide + 1) % slides.length;
                 showSlide(activeSlide);
             }, 6000);
         } catch (error) {
+            // If Firebase fails to connect, the site still shows the default HTML content
             console.warn('The live slides are not connected yet.', error);
         }
+        // end of Firebase connection block
     </script>
+    <!-- /JAVASCRIPT -->
 </body>
 </html>
