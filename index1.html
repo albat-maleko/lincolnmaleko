@@ -4,271 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Maleko Design Agency creates bold visual identities for motorcycle riders, clubs, and events.">
+    <meta name="theme-color" content="#101114">
     <title>Maleko Design Agency | Built for Riders</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="modern-interactions.css">
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
         <div class="wrap nav">
             <a class="brand" href="#top"><span class="brand-mark">M</span> Maleko Design</a>
-            <nav aria-label="Main navigation">
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#process">Process</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+            <nav aria-label="Main navigation"><ul class="nav-links">
+                <li><a href="#about">About</a></li><li><a href="#services">Services</a></li>
+                <li><a href="#process">Process</a></li><li><a href="#portfolio">Portfolio</a></li><li><a href="#contact">Contact</a></li>
+            </ul></nav>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Change colour theme" title="Change colour theme"><span aria-hidden="true">◐</span><span class="theme-toggle-label">Theme</span></button>
         </div>
     </header>
 
-    <main id="top">
-        <section class="hero" id="hero">
-            <div class="wrap hero-content">
-                <p class="eyebrow" id="heroEyebrow">Visual identity for the road</p>
-                <h1 id="heroTitle">Built for riders with something to say.</h1>
-                <p class="hero-copy" id="heroCopy">Maleko Design Agency creates sharp, memorable branding for motorcycle riders, clubs, and events that refuse to blend in.</p>
-                <a class="button" href="#contact">Start a project</a>
-                <a class="button button-outline" href="#services">Explore services</a>
-            </div>
-        </section>
+    <main id="main">
+        <section class="hero" id="hero"><div class="wrap hero-content">
+            <p class="eyebrow" id="heroEyebrow">Visual identity for the road</p>
+            <h1 id="heroTitle">Built for riders with something to say.</h1>
+            <p class="hero-copy" id="heroCopy">Maleko Design Agency creates sharp, memorable branding for motorcycle riders, clubs, and events that refuse to blend in.</p>
+            <a class="button" href="#contact">Start a project</a><a class="button button-outline" href="#services">Explore services</a>
+        </div></section>
 
-        <section id="about">
-            <div class="wrap">
-                <div class="section-heading">
-                    <span class="section-label" id="aboutLabel">The brief</span>
-                    <div>
-                        <h2 id="aboutHeading">One agency. One clear audience.</h2>
-                        <p class="intro" id="aboutIntro">Maleko is the design studio. Motorcycle riders, clubs, and event organizers are the people we create for.</p>
-                    </div>
-                </div>
-                <div class="identity-grid">
-                    <article class="identity-card">
-                        <span class="card-number" id="organizationLabel">01 / Organization</span>
-                        <h3 id="organizationTitle">Maleko Design Agency</h3>
-                        <p id="organizationDescription">A graphic design studio creating brand identities, event materials, and digital visuals with a strong point of view.</p>
-                    </article>
-                    <article class="identity-card client-card">
-                        <span class="card-number" id="clientLabel">02 / Clients</span>
-                        <h3 id="clientTitle">Motorcycle riders</h3>
-                        <p id="clientDescription">Independent riders, motorcycle clubs, and event organizers looking for a visual identity that feels true to their community.</p>
-                    </article>
-                </div>
+        <section id="about"><div class="wrap">
+            <div class="section-heading"><span class="section-label" id="aboutLabel">The brief</span><div><h2 id="aboutHeading">One agency. One clear audience.</h2><p class="intro" id="aboutIntro">Maleko is the design studio. Motorcycle riders, clubs, and event organizers are the people we create for.</p></div></div>
+            <div class="identity-grid">
+                <article class="identity-card"><span class="card-number" id="organizationLabel">01 / Organization</span><h3 id="organizationTitle">Maleko Design Agency</h3><p id="organizationDescription">A graphic design studio creating brand identities, event materials, and digital visuals with a strong point of view.</p></article>
+                <article class="identity-card client-card"><span class="card-number" id="clientLabel">02 / Clients</span><h3 id="clientTitle">Motorcycle riders</h3><p id="clientDescription">Independent riders, motorcycle clubs, and event organizers looking for a visual identity that feels true to their community.</p></article>
             </div>
-        </section>
+        </div></section>
 
-        <section class="services" id="services">
-            <div class="wrap">
-                <div class="section-heading">
-                    <span class="section-label" id="servicesLabel">What we make</span>
-                    <div>
-                        <h2 id="servicesHeading">Design that travels further.</h2>
-                        <p class="intro" id="servicesIntro">From the first logo sketch to the sticker on a helmet, every piece is designed to be seen and remembered.</p>
-                    </div>
-                </div>
-                <div class="service-grid" id="serviceGrid">
-                    <article class="service service-logo"><span class="service-index">01</span><h3>Club Identity</h3><p>Logos, colour systems, patches, and apparel artwork for rider communities.</p><span class="service-meta">From TZS 80,000 · 3–5 days</span></article>
-                    <article class="service service-event"><span class="service-index">02</span><h3>Event Promotion</h3><p>Posters, social graphics, and flyers for rides, races, launches, and meet-ups.</p><span class="service-meta">From TZS 40,000 · 1–3 days</span></article>
-                    <article class="service service-decals"><span class="service-index">03</span><h3>Decals &amp; Stickers</h3><p>Custom artwork for bikes, helmets, packaging, and merchandise.</p><span class="service-meta">From TZS 50,000 · 2–4 days</span></article>
-                </div>
-                <table class="service-table">
-                    <caption>Quick reference: starting price and typical turnaround for each service.</caption>
-                    <thead><tr><th scope="col">Service</th><th scope="col">Starting price</th><th scope="col">Typical timeline</th></tr></thead>
-                    <tbody>
-                        <tr><td>Club Identity</td><td>From TZS 80,000</td><td>3–5 days</td></tr>
-                        <tr><td>Event Promotion</td><td>From TZS 40,000</td><td>1–3 days</td></tr>
-                        <tr><td>Decals &amp; Stickers</td><td>From TZS 50,000</td><td>2–4 days</td></tr>
-                    </tbody>
-                </table>
+        <section class="services" id="services"><div class="wrap">
+            <div class="section-heading"><span class="section-label" id="servicesLabel">What we make</span><div><h2 id="servicesHeading">Design that travels further.</h2><p class="intro" id="servicesIntro">From the first logo sketch to the sticker on a helmet, every piece is designed to be seen and remembered.</p></div></div>
+            <div class="service-grid" id="serviceGrid">
+                <article class="service service-logo"><span class="service-index">01</span><h3>Club Identity</h3><p>Logos, colour systems, patches, and apparel artwork for rider communities.</p><span class="service-meta">From TZS 80,000 · 3–5 days</span></article>
+                <article class="service service-event"><span class="service-index">02</span><h3>Event Promotion</h3><p>Posters, social graphics, and flyers for rides, races, launches, and meet-ups.</p><span class="service-meta">From TZS 40,000 · 1–3 days</span></article>
+                <article class="service service-decals"><span class="service-index">03</span><h3>Decals &amp; Stickers</h3><p>Custom artwork for bikes, helmets, packaging, and merchandise.</p><span class="service-meta">From TZS 50,000 · 2–4 days</span></article>
             </div>
-        </section>
+            <table class="service-table"><caption>Quick reference: starting price and typical turnaround for each service.</caption><thead><tr><th scope="col">Service</th><th scope="col">Starting price</th><th scope="col">Typical timeline</th></tr></thead><tbody>
+                <tr><td>Club Identity</td><td>From TZS 80,000</td><td>3–5 days</td></tr><tr><td>Event Promotion</td><td>From TZS 40,000</td><td>1–3 days</td></tr><tr><td>Decals &amp; Stickers</td><td>From TZS 50,000</td><td>2–4 days</td></tr>
+            </tbody></table>
+        </div></section>
 
-        <section class="process" id="process">
-            <div class="wrap">
-                <div class="section-heading">
-                    <span class="section-label" id="processLabel">Working together</span>
-                    <h2 id="processHeading">Simple from first message to final file.</h2>
-                </div>
-                <div class="process-grid" id="processGrid">
-                    <article class="step"><span>01</span><h3>Tell us the story</h3><p>Share your idea, audience, and the design you need.</p></article>
-                    <article class="step"><span>02</span><h3>We shape the concept</h3><p>We turn the brief into a focused visual direction for your approval.</p></article>
-                    <article class="step"><span>03</span><h3>Ride with the result</h3><p>After feedback, you receive polished files ready for print or digital use.</p></article>
-                </div>
-            </div>
-        </section>
+        <section class="process" id="process"><div class="wrap">
+            <div class="section-heading"><span class="section-label" id="processLabel">Working together</span><h2 id="processHeading">Simple from first message to final file.</h2></div>
+            <div class="process-grid" id="processGrid"><article class="step"><span>01</span><h3>Tell us the story</h3><p>Share your idea, audience, and the design you need.</p></article><article class="step"><span>02</span><h3>We shape the concept</h3><p>We turn the brief into a focused visual direction for your approval.</p></article><article class="step"><span>03</span><h3>Ride with the result</h3><p>After feedback, you receive polished files ready for print or digital use.</p></article></div>
+        </div></section>
 
-        <section class="showcase" id="portfolio">
-            <div class="wrap">
-                <div class="section-heading">
-                    <span class="section-label">Selected work</span>
-                    <div><h2>Made to be seen on and off the road.</h2><p class="intro">A few examples of the visual direction we create for rider culture, events, and merchandise.</p></div>
-                </div>
-                <div class="showcase-slider" id="portfolioSlider">
-                    <article class="showcase-slide active"><img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Motorcycle design inspiration"><div class="showcase-copy"><p class="section-label">Club identity</p><h3>Built around your crew.</h3><p>A distinctive look for the people who ride together.</p></div></article>
-                    <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Live motorcycle event"><div class="showcase-copy"><p class="section-label">Event promotion</p><h3>Make the next ride unmissable.</h3><p>Clear, energetic visuals that bring your community together.</p></div></article>
-                    <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Motorcycle rider on the road"><div class="showcase-copy"><p class="section-label">Rider culture</p><h3>Your identity goes further.</h3><p>Design made to look sharp on the road, online, and everywhere in between.</p></div></article>
-                </div>
-                <div class="slider-controls" aria-label="Portfolio controls"><button type="button" id="portfolioPrevious" aria-label="Previous portfolio item">←</button><button type="button" id="portfolioNext" aria-label="Next portfolio item">→</button></div>
+        <section class="showcase" id="portfolio"><div class="wrap">
+            <div class="section-heading"><span class="section-label">Selected work</span><div><h2>Made to be seen on and off the road.</h2><p class="intro">A few examples of the visual direction we create for rider culture, events, and merchandise.</p></div></div>
+            <div class="showcase-slider" id="portfolioSlider">
+                <article class="showcase-slide active"><img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Motorcycle design inspiration"><div class="showcase-copy"><p class="section-label">Club identity</p><h3>Built around your crew.</h3><p>A distinctive look for the people who ride together.</p></div></article>
+                <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Live motorcycle event"><div class="showcase-copy"><p class="section-label">Event promotion</p><h3>Make the next ride unmissable.</h3><p>Clear, energetic visuals that bring your community together.</p></div></article>
+                <article class="showcase-slide"><img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Motorcycle rider on the road"><div class="showcase-copy"><p class="section-label">Rider culture</p><h3>Your identity goes further.</h3><p>Design made to look sharp on the road, online, and everywhere in between.</p></div></article>
             </div>
-        </section>
+            <div class="slider-controls" aria-label="Portfolio controls"><button type="button" id="portfolioPrevious" aria-label="Previous portfolio item">←</button><button type="button" id="portfolioNext" aria-label="Next portfolio item">→</button></div>
+        </div></section>
 
-        <section class="testimonials" id="testimonials">
-            <div class="wrap">
-                <div class="section-heading"><span class="section-label">Client notes</span><h2>Trusted by people who value a strong first impression.</h2></div>
-                <div id="testimonialSlider">
-                    <article class="testimonial-slide active"><p class="testimonial-quote">“The design gave our riding group a look that finally feels like us. It is clean, memorable, and easy to use.”</p><p class="testimonial-author">Riding group client</p></article>
-                    <article class="testimonial-slide"><p class="testimonial-quote">“Our event poster was shared far more than previous designs. People understood the event details immediately.”</p><p class="testimonial-author">Event organizer</p></article>
-                    <article class="testimonial-slide"><p class="testimonial-quote">“The process was clear from the first message. We received designs that were ready for print and social media.”</p><p class="testimonial-author">Maleko client</p></article>
-                </div>
-                <div class="slider-controls"><button type="button" id="testimonialPrevious" aria-label="Previous testimonial">←</button><button type="button" id="testimonialNext" aria-label="Next testimonial">→</button></div>
-            </div>
-        </section>
+        <section class="testimonials" id="testimonials"><div class="wrap">
+            <div class="section-heading"><span class="section-label">Client notes</span><h2>Trusted by people who value a strong first impression.</h2></div>
+            <div id="testimonialSlider"><article class="testimonial-slide active"><p class="testimonial-quote">“The design gave our riding group a look that finally feels like us. It is clean, memorable, and easy to use.”</p><p class="testimonial-author">Riding group client</p></article><article class="testimonial-slide"><p class="testimonial-quote">“Our event poster was shared far more than previous designs. People understood the event details immediately.”</p><p class="testimonial-author">Event organizer</p></article><article class="testimonial-slide"><p class="testimonial-quote">“The process was clear from the first message. We received designs that were ready for print and social media.”</p><p class="testimonial-author">Maleko client</p></article></div>
+            <div class="slider-controls"><button type="button" id="testimonialPrevious" aria-label="Previous testimonial">←</button><button type="button" id="testimonialNext" aria-label="Next testimonial">→</button></div>
+        </div></section>
 
-        <section id="contact">
-            <div class="wrap contact-grid">
-                <div class="contact-copy">
-                    <p class="section-label" id="contactLabel">Start a project</p>
-                    <h2 id="contactHeading">Got an idea worth showing?</h2>
-                    <p id="contactDescription">Tell us about your club, event, bike, or brand. We will help turn it into a design people remember.</p>
-                    <p class="contact-note" id="contactNote">Typical requests:</p>
-                    <ul class="contact-note-list"><li>logos</li><li>event posters</li><li>social-media graphics</li><li>decals</li><li>merchandise artwork</li></ul>
-                    <div class="contact-links"><a href="https://wa.me/255700000000" target="_blank" rel="noopener">WhatsApp</a><a href="tel:+255700000000">Call us</a><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></div>
-                </div>
-                <form action="https://formspree.io/f/mzdnwbvo" method="POST">
-                    <input type="hidden" name="_subject" value="New Maleko Design Project Request">
-                    <label for="name">Your name<input id="name" name="name" type="text" autocomplete="name" required></label>
-                    <label for="email">Email address<input id="email" name="email" type="email" autocomplete="email" required></label>
-                    <label for="phone">Phone / WhatsApp number<input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+255 700 000 000" required></label>
-                    <label for="budget">Estimated budget<select id="budget" name="budget" required><option value="" selected disabled>Select a budget range</option><option>Under TZS 50,000</option><option>TZS 50,000 – 100,000</option><option>TZS 100,000 – 250,000</option><option>Over TZS 250,000</option></select></label>
-                    <label for="deadline">Preferred deadline<input id="deadline" name="deadline" type="date" required></label>
-                    <label for="message">What would you like designed?<textarea id="message" name="message" required></textarea></label>
-                    <button class="button" type="submit">Send project request</button>
-                    <p class="contact-note" id="privacy">We use your details only to reply to your project request. We do not sell your information.</p>
-                    <p id="responseMessage" aria-live="polite"></p>
-                </form>
-            </div>
-        </section>
+        <section id="contact"><div class="wrap contact-grid">
+            <div class="contact-copy"><p class="section-label" id="contactLabel">Start a project</p><h2 id="contactHeading">Got an idea worth showing?</h2><p id="contactDescription">Tell us about your club, event, bike, or brand. We will help turn it into a design people remember.</p><p class="contact-note" id="contactNote">Typical requests:</p><ul class="contact-note-list"><li>logos</li><li>event posters</li><li>social-media graphics</li><li>decals</li><li>merchandise artwork</li></ul><div class="contact-links"><a href="https://wa.me/255700000000" target="_blank" rel="noopener">WhatsApp</a><a href="tel:+255700000000">Call us</a><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></div></div>
+            <form action="https://formspree.io/f/mzdnwbvo" method="POST"><input type="hidden" name="_subject" value="New Maleko Design Project Request">
+                <label for="name">Your name<input id="name" name="name" type="text" autocomplete="name" required></label><label for="email">Email address<input id="email" name="email" type="email" autocomplete="email" required></label><label for="phone">Phone / WhatsApp number<input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+255 700 000 000" required></label>
+                <label for="budget">Estimated budget<select id="budget" name="budget" required><option value="" selected disabled>Select a budget range</option><option>Under TZS 50,000</option><option>TZS 50,000 – 100,000</option><option>TZS 100,000 – 250,000</option><option>Over TZS 250,000</option></select></label><label for="deadline">Preferred deadline<input id="deadline" name="deadline" type="date" required></label><label for="message">What would you like designed?<textarea id="message" name="message" required></textarea></label>
+                <button class="button" type="submit">Send project request</button><p class="contact-note" id="privacy">We use your details only to reply to your project request. We do not sell your information.</p><p id="responseMessage" aria-live="polite"></p>
+            </form>
+        </div></section>
     </main>
 
-    <footer>
-        <div class="wrap footer-inner">
-            <span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span>
-            <div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#process">Process</a><a href="#contact">Contact</a></div>
-        </div>
-    </footer>
+    <footer><div class="wrap footer-inner"><span>© 2026 Maleko Design Agency · Visual identity for motorcycle culture.</span><div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#process">Process</a><a href="#contact">Contact</a></div></div></footer>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
-        import { getFirestore, collection, doc, onSnapshot, query, where } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
-        import { firebaseConfig } from './firebase-config.js';
+    <script>
+        // Switch between modern colour palettes and remember the visitor's choice.
+        const palettes = ['ember', 'electric', 'sage'];
+        const themeButton = document.getElementById('themeToggle');
+        let paletteIndex = Math.max(0, palettes.indexOf(localStorage.getItem('maleko-theme')));
+        document.documentElement.dataset.theme = palettes[paletteIndex];
+        themeButton.addEventListener('click', () => {
+            paletteIndex = (paletteIndex + 1) % palettes.length;
+            document.documentElement.dataset.theme = palettes[paletteIndex];
+            localStorage.setItem('maleko-theme', palettes[paletteIndex]);
+            themeButton.querySelector('.theme-toggle-label').textContent = palettes[paletteIndex];
+        });
+
+        // Reveal content as it enters the viewport; keep it visible if motion is reduced.
+        const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+        }), { threshold: 0.12 });
+        document.querySelectorAll('main section:not(.hero) .wrap > *').forEach((item) => { item.classList.add('reveal'); revealObserver.observe(item); });
 
         function setupCarousel(containerId, selector, previousId, nextId, interval) {
-            const container = document.getElementById(containerId);
-            let items = [...container.querySelectorAll(selector)];
-            let current = 0;
-            function show(index) {
-                if (!items.length) return;
-                current = (index + items.length) % items.length;
-                items.forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === current));
-            }
+            const container = document.getElementById(containerId); let items = [...container.querySelectorAll(selector)]; let current = 0;
+            function show(index) { if (!items.length) return; current = (index + items.length) % items.length; items.forEach((item, i) => item.classList.toggle('active', i === current)); }
             function refresh() { items = [...container.querySelectorAll(selector)]; current = 0; show(0); }
             document.getElementById(previousId).addEventListener('click', () => show(current - 1));
             document.getElementById(nextId).addEventListener('click', () => show(current + 1));
             if (interval) setInterval(() => show(current + 1), interval);
             return { refresh };
         }
-
         const portfolioCarousel = setupCarousel('portfolioSlider', '.showcase-slide', 'portfolioPrevious', 'portfolioNext', 7000);
         setupCarousel('testimonialSlider', '.testimonial-slide', 'testimonialPrevious', 'testimonialNext', 7000);
 
-        function updateText(id, value) {
-            const element = document.getElementById(id);
-            if (element && value) element.textContent = value;
-        }
-
-        try {
-            const database = getFirestore(initializeApp(firebaseConfig));
-
-            onSnapshot(doc(database, 'siteContent', 'main'), (snapshot) => {
-                if (!snapshot.exists()) return;
-                const content = snapshot.data();
-                [
-                    'aboutLabel', 'aboutHeading', 'aboutIntro', 'organizationLabel', 'organizationTitle',
-                    'organizationDescription', 'clientLabel', 'clientTitle', 'clientDescription',
-                    'servicesLabel', 'servicesHeading', 'servicesIntro', 'processLabel', 'processHeading',
-                    'contactLabel', 'contactHeading', 'contactDescription', 'contactNote'
-                ].forEach((key) => updateText(key, content[key]));
-            }, (error) => console.warn('Live page text is not connected.', error));
-
-            const slidesQuery = query(collection(database, 'slides'), where('active', '==', true));
-            onSnapshot(slidesQuery, (snapshot) => {
-                const slides = snapshot.docs.map((item) => item.data()).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-                if (!slides.length) return;
-                let activeSlide = 0;
-                const hero = document.getElementById('hero');
-                const showSlide = () => {
-                    const slide = slides[activeSlide];
-                    updateText('heroEyebrow', slide.label || 'Visual identity for the road');
-                    updateText('heroTitle', slide.title);
-                    updateText('heroCopy', slide.description);
-                    if (slide.imageUrl) hero.style.backgroundImage = `linear-gradient(90deg, rgba(11, 12, 14, 0.92), rgba(11, 12, 14, 0.23)), url("${slide.imageUrl}")`;
-                };
-                showSlide();
-                if (slides.length > 1) setInterval(() => { activeSlide = (activeSlide + 1) % slides.length; showSlide(); }, 6000);
-            }, (error) => console.warn('Live hero slides are not connected.', error));
-
-            const servicesQuery = query(collection(database, 'services'), where('active', '==', true));
-            onSnapshot(servicesQuery, (snapshot) => {
-                const items = snapshot.docs.map((item) => item.data()).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-                if (!items.length) return;
-                const grid = document.getElementById('serviceGrid');
-                grid.replaceChildren();
-                items.forEach((item, index) => {
-                    const card = document.createElement('article');
-                    card.className = 'service';
-                    if (item.imageUrl) card.style.backgroundImage = `url("${item.imageUrl}")`;
-                    const number = document.createElement('span'); number.className = 'service-index'; number.textContent = String(index + 1).padStart(2, '0');
-                    const title = document.createElement('h3'); title.textContent = item.title || '';
-                    const description = document.createElement('p'); description.textContent = item.description || '';
-                    const meta = document.createElement('span'); meta.className = 'service-meta'; meta.textContent = [item.price, item.timeline].filter(Boolean).join(' · ');
-                    card.append(number, title, description, meta); grid.append(card);
-                });
-            }, (error) => console.warn('Live services are not connected.', error));
-
-            const stepsQuery = query(collection(database, 'processSteps'), where('active', '==', true));
-            onSnapshot(stepsQuery, (snapshot) => {
-                const items = snapshot.docs.map((item) => item.data()).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-                if (!items.length) return;
-                const grid = document.getElementById('processGrid'); grid.replaceChildren();
-                items.forEach((item, index) => {
-                    const step = document.createElement('article'); step.className = 'step';
-                    const number = document.createElement('span'); number.textContent = String(index + 1).padStart(2, '0');
-                    const title = document.createElement('h3'); title.textContent = item.title || '';
-                    const description = document.createElement('p'); description.textContent = item.description || '';
-                    step.append(number, title, description); grid.append(step);
-                });
-            }, (error) => console.warn('Live process steps are not connected.', error));
-
-            const portfolioQuery = query(collection(database, 'portfolio'), where('active', '==', true));
-            onSnapshot(portfolioQuery, (snapshot) => {
-                const items = snapshot.docs.map((item) => item.data()).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-                if (!items.length) return;
-                const container = document.getElementById('portfolioSlider'); container.replaceChildren();
-                items.forEach((item, index) => {
-                    const slide = document.createElement('article'); slide.className = 'showcase-slide' + (index === 0 ? ' active' : '');
-                    const image = document.createElement('img'); image.src = item.imageUrl || ''; image.alt = item.title || 'Portfolio image';
-                    const copy = document.createElement('div'); copy.className = 'showcase-copy';
-                    const label = document.createElement('p'); label.className = 'section-label'; label.textContent = item.label || '';
-                    const title = document.createElement('h3'); title.textContent = item.title || '';
-                    const description = document.createElement('p'); description.textContent = item.description || '';
-                    copy.append(label, title, description); slide.append(image, copy); container.append(slide);
-                });
-                portfolioCarousel.refresh();
-            }, (error) => console.warn('Live portfolio is not connected.', error));
-        } catch (error) {
-            console.warn('Firebase is unavailable; the default page content is being shown.', error);
-        }
+        // Optional live Firestore content: defaults remain in the page if Firebase is unavailable.
+        import('https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js').then(async ({ initializeApp }) => {
+            const [{ getFirestore, collection, doc, onSnapshot, query, where }, { firebaseConfig }] = await Promise.all([
+                import('https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js'), import('./firebase-config.js')
+            ]);
+            const db = getFirestore(initializeApp(firebaseConfig));
+            const updateText = (id, value) => { const element = document.getElementById(id); if (element && value) element.textContent = value; };
+            onSnapshot(doc(db, 'siteContent', 'main'), (snapshot) => {
+                if (!snapshot.exists()) return; const data = snapshot.data();
+                ['aboutLabel','aboutHeading','aboutIntro','organizationLabel','organizationTitle','organizationDescription','clientLabel','clientTitle','clientDescription','servicesLabel','servicesHeading','servicesIntro','processLabel','processHeading','contactLabel','contactHeading','contactDescription','contactNote'].forEach((key) => updateText(key, data[key]));
+            }, (error) => console.warn('Live page text unavailable.', error));
+            const watchList = (name, render) => onSnapshot(query(collection(db, name), where('active', '==', true)), (snapshot) => render(snapshot.docs.map((item) => ({ id: item.id, ...item.data() })).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))), (error) => console.warn(`Live ${name} unavailable.`, error));
+            watchList('slides', (slides) => {
+                if (!slides.length) return; let index = 0; const hero = document.getElementById('hero');
+                const show = () => { const slide = slides[index]; updateText('heroEyebrow', slide.label || 'Visual identity for the road'); updateText('heroTitle', slide.title); updateText('heroCopy', slide.description); if (slide.imageUrl) hero.style.backgroundImage = `linear-gradient(90deg, rgba(11,12,14,.92), rgba(11,12,14,.23)), url("${slide.imageUrl}")`; };
+                show(); if (slides.length > 1) setInterval(() => { index = (index + 1) % slides.length; show(); }, 6000);
+            });
+            watchList('services', (items) => {
+                if (!items.length) return; const grid = document.getElementById('serviceGrid'); grid.replaceChildren();
+                items.forEach((item, index) => { const card = document.createElement('article'); card.className = 'service'; if (item.imageUrl) card.style.backgroundImage = `url("${item.imageUrl}")`; const number = document.createElement('span'); number.className = 'service-index'; number.textContent = String(index + 1).padStart(2, '0'); const title = document.createElement('h3'); title.textContent = item.title || ''; const text = document.createElement('p'); text.textContent = item.description || ''; const meta = document.createElement('span'); meta.className = 'service-meta'; meta.textContent = [item.price, item.timeline].filter(Boolean).join(' · '); card.append(number, title, text, meta); grid.append(card); });
+            });
+            watchList('processSteps', (items) => {
+                if (!items.length) return; const grid = document.getElementById('processGrid'); grid.replaceChildren();
+                items.forEach((item, index) => { const step = document.createElement('article'); step.className = 'step'; const number = document.createElement('span'); number.textContent = String(index + 1).padStart(2, '0'); const title = document.createElement('h3'); title.textContent = item.title || ''; const text = document.createElement('p'); text.textContent = item.description || ''; step.append(number, title, text); grid.append(step); });
+            });
+            watchList('portfolio', (items) => {
+                if (!items.length) return; const slider = document.getElementById('portfolioSlider'); slider.replaceChildren();
+                items.forEach((item, index) => { const slide = document.createElement('article'); slide.className = 'showcase-slide' + (index === 0 ? ' active' : ''); const image = document.createElement('img'); image.src = item.imageUrl || ''; image.alt = item.title || 'Portfolio image'; const copy = document.createElement('div'); copy.className = 'showcase-copy'; const label = document.createElement('p'); label.className = 'section-label'; label.textContent = item.label || ''; const title = document.createElement('h3'); title.textContent = item.title || ''; const text = document.createElement('p'); text.textContent = item.description || ''; copy.append(label, title, text); slide.append(image, copy); slider.append(slide); }); portfolioCarousel.refresh();
+            });
+        }).catch((error) => console.warn('Firebase is unavailable; showing default content.', error));
     </script>
 </body>
 </html>
