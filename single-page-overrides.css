@@ -1,0 +1,14 @@
+/* Keep every section reachable from the single-page navigation on small screens. */
+@media (max-width: 760px) {
+    .nav { gap: 10px; }
+    .nav-links { flex-wrap: wrap; justify-content: flex-end; gap: 6px 10px; }
+    .nav-links a { font-size: 0.68rem; }
+    .nav-links li:nth-child(2), .nav-links li:nth-child(3) { display: list-item; }
+}
+
+.service-table { width: 100%; border-collapse: collapse; margin-top: 44px; background: #f8f5ef; }
+.service-table caption { margin-bottom: 14px; color: var(--muted); font-size: 0.82rem; text-align: left; }
+.service-table th, .service-table td { padding: 14px 18px; border: 1px solid var(--line); text-align: left; }
+.service-table th { background: var(--ink); color: #fff; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.contact-note-list { margin: 6px 0 0; padding-left: 20px; color: var(--muted); font-size: 0.88rem; }
+.contact-note-list li { margin-bottom: 2px; }
